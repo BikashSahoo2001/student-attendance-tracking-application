@@ -4,6 +4,7 @@ use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Livewire\Teacher\Students\StudentList;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,6 +15,7 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified','teacher'])
     ->name('teacher.dashboard');
 
+Route::get('/student-list', StudentList::class)->name('student.index');
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
