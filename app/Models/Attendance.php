@@ -17,4 +17,12 @@ class Attendance extends Model
         'reason',
         'status',
     ];
+
+    public function student () {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function grade( ) {
+        return $this->belongsTo(Grade::class);
+    }
 }
