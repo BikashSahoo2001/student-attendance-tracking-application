@@ -6,6 +6,8 @@ use App\Models\Grade;
 use App\Models\Student;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
+
 #[Title('Student Attendance | Add Student')]
 class AddStudent extends Component
 {
@@ -34,6 +36,12 @@ class AddStudent extends Component
             'age' => $this->age,
             'grade_id' => $this->grade,
         ]);
+
+        $this->reset();
+    
+        Toaster::success( 'student added successfully!');
+        
+        return redirect()->route('student.index');
     }
     public function render()
     {
