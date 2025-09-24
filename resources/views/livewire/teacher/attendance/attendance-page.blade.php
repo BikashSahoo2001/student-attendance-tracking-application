@@ -62,6 +62,15 @@
                                 <th scope="col" class="px-6 py-3 text-start border-s border-gray-200 dark:border-neutral-700">
                                     <span class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
                                         {{ $day }}
+
+                                        <select wire:change="markAll({{ $day }}, $event.target.value )" class="dark:bg-neutral-900">
+                                            <option value="">ALL</option>
+                                            <option value="present">Present</option>
+                                            <option value="absent">Absent</option>
+                                            <option value="sick">Sick</option>
+                                            <option value="other">Other</option>
+                                               
+                                        </select>
                                     </span>
                                 </th>
                             @endforeach
@@ -70,7 +79,30 @@
                         </thead>
 
                         <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-
+                            @foreach ($students as $student )
+                                 <tr :key="{{ $student->id }}">
+                                    <td class="h-px w-auto whitespace-nowrap">
+                                    <div class="px-6 py-2">
+                                        <span class="font-semibold text-sm text-gray-800 dark:text-neutral-200">{{ $student->first_name }} {{ $student->last_name }}</span>
+                                        <!-- <span class="text-xs text-gray-500 dark:text-neutral-500">(23.16%)</span> -->
+                                    </div>
+                                    </td>
+                                    @foreach (range(1, $daysInMonth) as $day )
+                                        <td class="h-px w-auto whitespace-nowrap">
+                                        <div class="px-6 py-2">
+                                            <select wire:change= "updateAttendance({{ $student->id }}, {{ $day }}, $event.target.value )" class="dark:bg-neutral-900">
+                                            <option value="present" {{ $attendance[$student->id][$day] == 'present' ? 'selected' : '' }}>Present</option>
+                                            <option value="absent" {{ $attendance[$student->id][$day] == 'absent' ? 'selected' : '' }} >Absent</option>
+                                            <option value="sick" {{ $attendance[$student->id][$day] == 'sick' ? 'selected' : '' }}>Sick</option>
+                                            <option value="other" {{ $attendance[$student->id][$day] == 'other' ? 'selected' : '' }}>Other</option>
+                                               
+                                        </select>
+                                        </div>
+                                    </td>
+                                    @endforeach
+                               
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <!-- End Table -->
